@@ -32,20 +32,58 @@ It is ideal for code understanding, automated documentation, and codebase onboar
 
 Clone this repo or copy `generate_mapping.py` to your preferred tools folder.
 
-**(Optional: CLI install)**
+**Optional: Install as CLI tool**
 
-'''
+If you want to run as `pymap` from anywhere, add a `setup.py` as described below and install:
+
+```bash
 pip install --user .
-'''
+# or, if you use pipx (recommended for global scripts)
+pipx install .
+
+
+```
 
 ### 2. RUN
 
-'''
+From the project directory, simply run:
+
+```bash
 pymap
-'''
+```
 
-or
+or to analyze any project folder:
 
-'''
+```bash
 pymap /path/to/any/python/project
-'''
+```
+
+Or run directly with Python:
+
+```bash
+python generate_mapping.py /path/to/any/python/project
+```
+
+### 2. OUTPUT
+
+The script generates a mapping.md file in your target project directory containing:
+All functions/methods with their argument names, types, and return type.
+All calls to other user-defined functions/methods, across the project.
+No external or standard library calls included.
+This file is ideal as context for LLM and agent workflows.
+
+```markdown
+### `my_module.my_func(x: int, y: str) -> float`
+
+- Calls: `other_module.another_func`
+
+### `my_module.MyClass.class_method(self: Any, z: list) -> None`
+
+- Calls: None
+```
+
+## Notes
+
+- Only user-defined function and method calls are included; external library calls are excluded.
+- Ignores directories listed in your .gitignore, as well as .git and **pycache** by default.
+- 100% standard library. No external dependencies required.
